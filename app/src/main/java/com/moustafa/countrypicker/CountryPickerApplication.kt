@@ -2,6 +2,7 @@ package com.moustafa.countrypicker
 
 import android.app.Application
 import com.moustafa.countrypicker.di.repositoryModule
+import com.moustafa.countrypicker.di.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -24,7 +25,7 @@ class CountryPickerApplication : Application() {
             }
             androidFileProperties()
 
-            modules(repositoryModule)
+            modules(listOf(repositoryModule, viewModelsModule))
         }
     }
 }

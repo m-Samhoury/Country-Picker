@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Country Picker</string>
+
+    <string name="generic_error_unknown">Unknown error</string>
+    <string name="action_retry">Retry</string>
+
 </resources>

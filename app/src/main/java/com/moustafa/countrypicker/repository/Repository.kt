@@ -1,5 +1,6 @@
 package com.moustafa.countrypicker.repository
 
+import com.moustafa.countrypicker.models.Country
 import retrofit2.Response
 
 /**
@@ -8,6 +9,8 @@ import retrofit2.Response
  */
 
 interface Repository {
+
+    suspend fun fetchCountriesList(onError: (Exception) -> Unit): List<Country>?
 
     suspend fun <T : Any> safeApiCall(
         call: suspend () -> Response<T>,
@@ -42,7 +45,6 @@ interface Repository {
             return Result.Error(exception)
         }
     }
-
 }
 
 

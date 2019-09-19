@@ -1,7 +1,6 @@
 package com.moustafa.countrypicker.repository.network
 
 import android.content.Context
-import coil.util.CoilUtils
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.squareup.moshi.Moshi
 import okhttp3.CertificatePinner
@@ -31,7 +30,6 @@ object NetworkLayerFactory {
             .readTimeout(TIME_OUTS, TimeUnit.SECONDS)
             .writeTimeout(TIME_OUTS, TimeUnit.SECONDS)
             .certificatePinner(CertificatePinner.DEFAULT)
-            .cache(CoilUtils.createDefaultCache(context))
             .retryOnConnectionFailure(false)
 
 

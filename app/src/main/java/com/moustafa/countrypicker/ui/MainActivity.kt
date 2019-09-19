@@ -16,7 +16,7 @@ import com.moustafa.countrypicker.base.BaseActivity
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private val appBarConfiguration = AppBarConfiguration(
-        emptySet()
+        setOf(R.id.countriesListFragment)
     )
 
     override fun setupViews() {

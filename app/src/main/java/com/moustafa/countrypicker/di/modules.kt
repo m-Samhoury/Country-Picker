@@ -5,7 +5,9 @@ import com.moustafa.countrypicker.repository.Repository
 import com.moustafa.countrypicker.repository.RepositoryImpl
 import com.moustafa.countrypicker.repository.network.NetworkLayerFactory
 import com.moustafa.countrypicker.repository.network.RestCountriesService
+import com.moustafa.countrypicker.ui.countrieslist.CountriesListViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -25,4 +27,9 @@ val repositoryModule: Module = module {
             )
     }
     single<Repository> { RepositoryImpl(get()) }
+}
+val viewModelsModule: Module = module {
+    viewModel {
+        CountriesListViewModel(repository = get())
+    }
 }

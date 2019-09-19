@@ -1,8 +1,7 @@
 package com.moustafa.countrypicker.repository
 
-import com.moustafa.countrypicker.repository.Repository
+import com.moustafa.countrypicker.models.Country
 import com.moustafa.countrypicker.repository.network.RestCountriesService
-import retrofit2.Response
 
 /**
  * This repository is our source of truth, we fetch all the data using this repository
@@ -11,4 +10,13 @@ import retrofit2.Response
  * @author moustafasamhoury
  * created on Thursday, 19 Sep, 2019
  */
-class RepositoryImpl(private val service: RestCountriesService) : Repository
+class RepositoryImpl(private val service: RestCountriesService) : Repository {
+
+    override suspend fun fetchCountriesList(onError: (Exception) -> Unit): List<Country>? {
+        val response = safeApiCall({
+            service.fetchAllCountries()
+        }, onError)
+        return response
+    }
+
+}

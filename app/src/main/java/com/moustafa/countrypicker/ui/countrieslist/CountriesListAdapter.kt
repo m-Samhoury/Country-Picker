@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.moustafa.countrypicker.R
 import com.moustafa.countrypicker.models.Country
+import com.moustafa.countrypicker.utils.load
 import kotlinx.android.synthetic.main.item_countries_list.view.*
 
 /**
@@ -53,7 +53,15 @@ class CountriesListAdapter(private val onRowClicked: ((View, Int) -> Any)? = nul
 
         fun bind(item: Country) {
             itemView.textViewCountryName.text = item.name
+
             itemView.textViewCountryDescription.text = item.description
+
+            if (item.flagUrl?.isNotBlank() == true) {
+                itemView.imageViewFlag.visibility = View.VISIBLE
+                itemView.imageViewFlag.load(item.flagUrl)
+            } else {
+                itemView.imageViewFlag.visibility = View.GONE
+            }
 
             itemView.textViewTimeZone.text = item.timeZonesFormatted(3)
         }

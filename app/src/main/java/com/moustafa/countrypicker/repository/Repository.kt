@@ -1,5 +1,6 @@
 package com.moustafa.countrypicker.repository
 
+import com.moustafa.countrypicker.BuildConfig
 import com.moustafa.countrypicker.models.Country
 import retrofit2.Response
 
@@ -43,6 +44,29 @@ interface Repository {
             return Result.Error(java.lang.Exception())
         } catch (exception: Exception) {
             return Result.Error(exception)
+        }
+    }
+
+    companion object {
+        fun formatStaticMapUrl(
+            mapLatLng: List<Double>?,
+            width: Int? = null,
+            height: Int? = null
+        ): String? {
+            if (mapLatLng?.size == 2) {
+                var url = "https://image.maps.api.here.com/mia/1.6/mapview" +
+                        "?app_id=${BuildConfig.MAP_APP_ID}" +
+                        "&app_code=${BuildConfig.MAP_APP_CODE}" +
+                        "&lat=${mapLatLng[0]}" +
+                        "&lon=${mapLatLng[1]}" +
+                        "&vt=0" +
+                        "&z=7"
+                if (width ?: 0 > 0 && height ?: 0 > 0) {
+                    url = url.plus("&w=$width&h=$height")
+                }
+                return url
+            }
+            return null
         }
     }
 }

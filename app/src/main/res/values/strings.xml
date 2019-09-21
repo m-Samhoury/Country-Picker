@@ -4,6 +4,9 @@
     <string name="generic_error_unknown">Unknown error</string>
     <string name="action_retry">Retry</string>
 
+    <!--    Countries List -->
+    <string name="countries_list_fragment_title">Countries of the World</string>
+
     <!--    Country Details-->
     <string name="label_country_regions">Country regions</string>
     <string name="country_details_name_label">Name</string>

@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/countriesListFragment"
         android:name="com.moustafa.countrypicker.ui.countrieslist.CountriesListFragment"
-        android:label="CountriesListFragment">
+        android:label="@string/countries_list_fragment_title">
         <action
             android:id="@+id/action_countriesListFragment_to_countryDetailsFragment"
             app:destination="@id/countryDetailsFragment"
@@ -17,8 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/countryDetailsFragment"
-        android:name="com.moustafa.countrypicker.ui.countrydetails.CountryDetailsFragment"
-        android:label="CountryDetailsFragment">
+        android:name="com.moustafa.countrypicker.ui.countrydetails.CountryDetailsFragment">
         <argument
             android:name="country"
             app:argType="com.moustafa.countrypicker.models.Country" />

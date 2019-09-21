@@ -9,7 +9,10 @@ import com.moustafa.countrypicker.R
  * created on Saturday, 21 Sep, 2019
  */
 
-fun GridLayout.addTimeZoneTextView(timeZone: String): TextView =
-    TextView(context, null, R.style.normalTextStyle).apply {
+fun GridLayout.addTimeZoneTextView(timeZone: String): TextView {
+    val textView = TextView(context, null, R.style.normalTextStyle).apply {
         text = timeZone
     }
+    addView(textView)
+    return textView
+}

@@ -3,6 +3,7 @@ package com.moustafa.countrypicker.ui.countrieslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +55,20 @@ class CountriesListAdapter(private val onRowClicked: ((View, Int) -> Any)? = nul
         fun bind(item: Country) {
             itemView.textViewCountryName.text = item.name
 
-            itemView.textViewCountryDescription.text = item.description
+            if (item.description?.isNotBlank() == true) {
+                val initialConstraintSet = ConstraintSet()
+                initialConstraintSet.clone(itemView.constraintLayoutRoot)
+                initialConstraintSet.setVerticalBias(R.id.textViewCountryName, 0.0f)
+                initialConstraintSet.setVisibility(R.id.textViewCountryDescription, View.VISIBLE)
+                initialConstraintSet.applyTo(itemView.constraintLayoutRoot)
+                itemView.textViewCountryDescription.text = item.description
+            } else {
+                val initialConstraintSet = ConstraintSet()
+                initialConstraintSet.clone(itemView.constraintLayoutRoot)
+                initialConstraintSet.setVisibility(R.id.textViewCountryDescription, View.GONE)
+                initialConstraintSet.setVerticalBias(R.id.textViewCountryName, 0.5f)
+                initialConstraintSet.applyTo(itemView.constraintLayoutRoot)
+            }
 
             if (item.flagUrl?.isNotBlank() == true) {
                 itemView.imageViewFlag.visibility = View.VISIBLE

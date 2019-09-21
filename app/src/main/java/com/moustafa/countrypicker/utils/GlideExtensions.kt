@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.moustafa.countrypicker.R
 import com.moustafa.countrypicker.utils.svgloading.GlideApp
 import com.moustafa.countrypicker.utils.svgloading.GlideRequest
 import com.moustafa.countrypicker.utils.svgloading.SvgSoftwareLayerSetter
@@ -34,6 +35,7 @@ fun ImageView.loadSVG(
         GlideApp.with(this)
             .`as`(PictureDrawable::class.java)
             .transition(withCrossFade())
+            .error(R.drawable.ic_flag)
             .listener(object : SvgSoftwareLayerSetter() {
                 override fun onLoadFailed(
                     e: GlideException?,

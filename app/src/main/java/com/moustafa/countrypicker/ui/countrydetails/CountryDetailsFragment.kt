@@ -3,6 +3,7 @@ package com.moustafa.countrypicker.ui.countrydetails
 import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moustafa.countrypicker.R
@@ -42,6 +43,7 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
     }
 
     private fun populateScreen() {
+        populateToolbarTitle()
         loadFlagImage()
         populateCountryName()
         populateCountryDescription()
@@ -49,6 +51,10 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
         populatePopulation()
         populateRegionalBlocs()
         loadStaticMap()
+    }
+
+    private fun populateToolbarTitle() {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = args.country.name
     }
 
     private fun loadStaticMap() {
@@ -97,8 +103,8 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
                 val textView = flowLayoutTimeZones.addTimeZoneTextView(timeZone)
 
                 if (index % 2 == 1) {//only apply margin to the second row i.e index 1, 3...
-                    (textView.layoutParams as GridLayout.LayoutParams)
-                        .setMargins(16.px(), 0, 0, 0)
+                    (textView.layoutParams as? GridLayout.LayoutParams)
+                        ?.setMargins(16.px(), 0, 0, 0)
                 }
             }
         } else {

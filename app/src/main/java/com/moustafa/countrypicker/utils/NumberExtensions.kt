@@ -1,6 +1,7 @@
 package com.moustafa.countrypicker.utils
 
 import android.content.res.Resources
+import java.text.NumberFormat
 
 /**
  * @author moustafasamhoury
@@ -11,3 +12,5 @@ import android.content.res.Resources
  */
 fun Int.px() =
     (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun Long.formatted() = NumberFormat.getInstance().format(this)

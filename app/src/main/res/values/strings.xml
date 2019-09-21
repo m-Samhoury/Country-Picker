@@ -4,4 +4,11 @@
     <string name="generic_error_unknown">Unknown error</string>
     <string name="action_retry">Retry</string>
 
+    <!--    Country Details-->
+    <string name="label_country_regions">Country regions</string>
+    <string name="country_details_name_label">Name</string>
+    <string name="country_details_description_label">Description</string>
+    <string name="country_details_time_zones_label">Time Zones</string>
+    <string name="country_details_population_label">Population</string>
+
 </resources>

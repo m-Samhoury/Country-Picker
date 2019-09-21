@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.moustafa.countrypicker.R
 import com.moustafa.countrypicker.base.BaseFragment
 import com.moustafa.countrypicker.models.Country
 import com.moustafa.countrypicker.repository.network.StateMonitor
-import com.moustafa.countrypicker.utils.ItemDecorationCustomMargins
+import com.moustafa.countrypicker.utils.ItemDecorationCustomPaddings
 import kotlinx.android.synthetic.main.fragment_countries_list.*
-import kotlinx.android.synthetic.main.item_countries_list.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -51,7 +48,7 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
             adapter = countriesListAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addItemDecoration(
-                ItemDecorationCustomMargins(
+                ItemDecorationCustomPaddings(
                     top = 8, bottom = 8,
                     start = 16, end = 16
                 )
@@ -86,7 +83,8 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
         view.findNavController().navigate(
             CountriesListFragmentDirections
                 .actionCountriesListFragmentToCountryDetailsFragment(
-                    countriesListAdapter.currentList[position])
+                    countriesListAdapter.currentList[position]
+                )
         )
     }
 

@@ -1,7 +1,10 @@
 package com.moustafa.countrypicker.ui.countrieslist
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,6 +29,11 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
 
     private val countriesListAdapter by lazy {
         CountriesListAdapter(::onRowItemClicked)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +62,24 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
                 )
             )
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = (searchItem?.actionView as? SearchView)
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                countriesListViewModel.filterCountries(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                countriesListViewModel.filterCountries(newText)
+                return true
+            }
+
+        })
     }
 
     private fun handleState(countriesListState: CountriesListState) =

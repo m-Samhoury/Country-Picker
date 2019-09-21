@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Country Picker</string>
 
-    <string name="generic_error_unknown">Unknown error</string>
-    <string name="action_retry">Retry</string>
-
     <!--    Countries List -->
     <string name="countries_list_fragment_title">Countries of the World</string>
 
@@ -13,5 +10,12 @@
     <string name="country_details_description_label">Description</string>
     <string name="country_details_time_zones_label">Time Zones</string>
     <string name="country_details_population_label">Population</string>
+
+    <!--    Main Screen-->
+    <string name="toolbar_search">Search</string>
+
+    <!--    Generics-->
+    <string name="generic_error_unknown">Unknown error</string>
+    <string name="action_retry">Retry</string>
 
 </resources>

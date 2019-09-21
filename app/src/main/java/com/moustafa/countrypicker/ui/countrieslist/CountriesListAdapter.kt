@@ -46,7 +46,7 @@ class CountriesListAdapter(private val onRowClicked: ((View, Int) -> Any)? = nul
     ) : RecyclerView.ViewHolder(view) {
 
         init {
-            view.setOnClickListener {
+            itemView.setOnClickListener {
                 onRowClicked?.invoke(it, adapterPosition)
             }
         }

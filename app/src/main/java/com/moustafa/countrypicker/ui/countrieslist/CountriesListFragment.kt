@@ -3,15 +3,19 @@ package com.moustafa.countrypicker.ui.countrieslist
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import com.moustafa.countrypicker.R
 import com.moustafa.countrypicker.base.BaseFragment
 import com.moustafa.countrypicker.models.Country
 import com.moustafa.countrypicker.repository.network.StateMonitor
 import com.moustafa.countrypicker.utils.ItemDecorationCustomMargins
-import kotlinx.android.synthetic.main.fragment_recipes_list.*
+import kotlinx.android.synthetic.main.fragment_countries_list.*
+import kotlinx.android.synthetic.main.item_countries_list.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -19,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * created on Tuesday, 10 Sep, 2019
  */
 
-class CountriesListFragment : BaseFragment(R.layout.fragment_recipes_list) {
+class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
 
     private val countriesListViewModel: CountriesListViewModel by viewModel()
 
@@ -34,11 +38,11 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_recipes_list) {
             handleState(it)
         })
 
-        fetchRecipes()
+        fetchCountriesList()
     }
 
-    private fun fetchRecipes() {
-        countriesListViewModel.fetchRecipesList()
+    private fun fetchCountriesList() {
+        countriesListViewModel.fetchCountriesList()
     }
 
     override fun setupViews(rootView: View) {
@@ -70,7 +74,7 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_recipes_list) {
             is StateMonitor.Failed -> {
                 showLoading(false)
                 showError(result.failed) {
-                    fetchRecipes()
+                    fetchCountriesList()
                 }
             }
         }
@@ -79,6 +83,11 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_recipes_list) {
         countriesListAdapter.submitList(recipesList)
 
     private fun onRowItemClicked(view: View, position: Int) {
+        view.findNavController().navigate(
+            CountriesListFragmentDirections
+                .actionCountriesListFragmentToCountryDetailsFragment(
+                    countriesListAdapter.currentList[position])
+        )
     }
 
     private fun showError(throwable: Throwable, action: (() -> Any)? = null) {

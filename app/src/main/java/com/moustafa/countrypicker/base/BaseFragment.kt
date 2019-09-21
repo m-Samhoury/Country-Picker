@@ -2,6 +2,7 @@ package com.moustafa.countrypicker.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 
 
@@ -15,6 +16,7 @@ abstract class BaseFragment(layout: Int) : Fragment(layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews(view)
+        ViewCompat.requestApplyInsets(view)
     }
 
     /**

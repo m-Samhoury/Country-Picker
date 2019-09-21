@@ -24,7 +24,7 @@ class CountriesListViewModel(
     private val _countriesListStateLiveData = MutableLiveData<CountriesListState>()
     val countriesListStateLiveData: LiveData<CountriesListState> = _countriesListStateLiveData
 
-    fun fetchRecipesList() {
+    fun fetchCountriesList() {
         _countriesListStateLiveData.value =
             countriesListState.copy(stateMonitor = StateMonitor.Loading)
         viewModelScope.launch(Dispatchers.Main) {

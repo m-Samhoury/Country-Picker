@@ -63,9 +63,11 @@ class CountriesListViewModel(
                             val countryName = country.name?.toLowerCase(Locale.US)
                             val countryDescription = country.description?.toLowerCase(Locale.US)
 
-                            ((countryName?.contains(query!!) == true)
+                            ((countryName?.contains(other = query!!, ignoreCase = true) == true)
                                     ||
-                                    (countryDescription?.contains(query!!) == true))
+                                    (countryDescription?.contains(
+                                        other = query!!,
+                                        ignoreCase = true) == true))
                         }
                     )
                 )

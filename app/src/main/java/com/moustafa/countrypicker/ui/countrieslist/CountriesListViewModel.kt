@@ -59,10 +59,13 @@ class CountriesListViewModel(
             _countriesListStateLiveData.value =
                 countriesListState.copy(
                     stateMonitor = StateMonitor.Loaded(
-                        anotherList.filter {
-                            ((it.name?.toLowerCase(Locale.US)?.contains(query!!) == true)
-                                    || (it.description?.toLowerCase(Locale.US)
-                                ?.contains(query!!) == true))
+                        anotherList.filter { country ->
+                            val countryName = country.name?.toLowerCase(Locale.US)
+                            val countryDescription = country.description?.toLowerCase(Locale.US)
+
+                            ((countryName?.contains(query!!) == true)
+                                    ||
+                                    (countryDescription?.contains(query!!) == true))
                         }
                     )
                 )

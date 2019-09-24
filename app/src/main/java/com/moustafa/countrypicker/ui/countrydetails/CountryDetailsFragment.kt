@@ -54,7 +54,7 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
     }
 
     private fun populateToolbarTitle() {
-        (activity as? AppCompatActivity)?.supportActionBar?.title = args.country.name
+        supportActionBar()?.title = args.country.name
     }
 
     private fun loadStaticMap() {

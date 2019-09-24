@@ -6,6 +6,34 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="autoCompleteTextViewStyle">@style/MySearchViewStyle</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <!-- Background for the search query section (e.g. EditText) -->
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:colorControlActivated">@color/black</item>
+        <item name="android:colorControlHighlight">@color/black</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:closeIcon">@drawable/ic_flag</item>
+
+        <!--        <item name="android:textAppearance">@style/normalTextStyle</item>-->
+        <!--        <item name="android:text">asdas da das</item>-->
+        <!--        <item name="android:editTextColor">@color/black</item>-->
+        <!--        <item name="searchIcon">@null</item>-->
+
+        <!--        &lt;!&ndash; Search button icon &ndash;&gt;-->
+        <!--        <item name="searchIcon">...</item>-->
+        <!--        &lt;!&ndash; Go/commit button icon &ndash;&gt;-->
+        <!--        <item name="goIcon">...</item>-->
+        <!--        &lt;!&ndash; Voice search button icon &ndash;&gt;-->
+        <!--        <item name="voiceIcon">...</item>-->
+        <!--        &lt;!&ndash; Commit icon shown in the query suggestion row &ndash;&gt;-->
+        <!--        <item name="commitIcon">...</item>-->
+        <!--        &lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
+        <!--        <item name="suggestionRowLayout">...</item>-->
     </style>
 
     <style name="normalTextStyle" parent="TextAppearance.AppCompat.Body1">

@@ -1,9 +1,8 @@
 package com.moustafa.countrypicker.ui.countrieslist
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -15,8 +14,10 @@ import com.moustafa.countrypicker.base.BaseFragment
 import com.moustafa.countrypicker.models.Country
 import com.moustafa.countrypicker.repository.network.StateMonitor
 import com.moustafa.countrypicker.utils.ItemDecorationCustomPaddings
+import com.moustafa.countrypicker.utils.setExpansionAnimation
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Math.hypot
 
 /**
  * @author moustafasamhoury
@@ -43,7 +44,6 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
             handleState(it)
         })
 
-        fetchCountriesList()
     }
 
     private fun fetchCountriesList() {
@@ -66,8 +66,13 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
-        val searchItem = menu.findItem(R.id.action_search)
+        val searchItem: MenuItem? = menu.findItem(R.id.action_search)
+        setupSearchView(searchItem)
+    }
+
+    private fun setupSearchView(searchItem: MenuItem?) {
         val searchView = (searchItem?.actionView as? SearchView)
+
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 countriesListViewModel.filterCountries(query)
@@ -78,8 +83,53 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
                 countriesListViewModel.filterCountries(newText)
                 return true
             }
-
         })
+
+        val searchBar = searchItem?.actionView
+        if (searchBar != null) {
+            searchItem.setExpansionAnimation(
+                revealAnimation = {
+                    val cx: Double = searchBar.measuredWidth.toDouble()
+                    val cy: Double = searchBar.measuredHeight / 2.0
+
+                    val finalRadius = hypot(cx, cy).toFloat()
+
+                    ViewAnimationUtils.createCircularReveal(
+                        searchBar,
+                        cx.toInt(),
+                        cy.toInt(),
+                        0f,
+                        finalRadius
+                    )
+                },
+                collapseAnimation = {
+                    val cx: Double = searchBar.measuredWidth.toDouble()
+                    val cy: Double = searchBar.measuredHeight / 2.0
+
+                    val finalRadius = hypot(cx, cy).toFloat()
+
+                    ViewAnimationUtils.createCircularReveal(
+                        searchBar,
+                        cx.toInt(),
+                        cy.toInt(),
+                        finalRadius,
+                        0f
+                    )
+                },
+                searchBarBackground = R.drawable.rectangular_background_rounded_corners,
+                searchCloseButtonColor = Color.BLACK
+            )
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_search -> {
+                item.expandActionView()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun handleState(countriesListState: CountriesListState) =

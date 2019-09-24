@@ -2,6 +2,7 @@ package com.moustafa.countrypicker.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 
@@ -26,5 +27,7 @@ abstract class BaseFragment(layout: Int) : Fragment(layout) {
      * @param rootView – The fragment's root view
      */
     protected abstract fun setupViews(rootView: View)
+
+    protected fun supportActionBar() = (activity as? AppCompatActivity)?.supportActionBar
 
 }

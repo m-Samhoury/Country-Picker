@@ -1,16 +1,26 @@
 package com.moustafa.countrypicker.ui.countrydetails
 
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
+import androidx.palette.graphics.Target
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moustafa.countrypicker.R
-import com.moustafa.countrypicker.base.BaseFragment
+import com.moustafa.countrypicker.base.*
 import com.moustafa.countrypicker.repository.Repository
 import com.moustafa.countrypicker.utils.*
 import kotlinx.android.synthetic.main.fragment_country_details.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 /**
  * @author moustafasamhoury
@@ -23,6 +33,8 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
     private val regionalBlocsListAdapter by lazy {
         RegionalBlocsListAdapter()
     }
+
+    private var generatedColors: Triple<ActionBarColor, StatusBarColor, TitleActionBarColor>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,10 +81,8 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
                     imageUrl = staticMapUrl,
                     roundedCorners = 8.px(), onSuccess = {
                         progressBarLoadingCountryMap.visibility = View.GONE
-                        null
                     }, onFailed = {
                         progressBarLoadingCountryMap.visibility = View.GONE
-                        null
                     }
                 )
             } else {
@@ -133,10 +143,111 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
 
     private fun loadFlagImage() {
         if (args.country.flagUrl?.isNotBlank() == true) {
-            imageViewCountryFlag.loadSVG(args.country.flagUrl!!)
+            imageViewCountryFlag.loadSVG(args.country.flagUrl!!, onSuccess = { drawable ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    generatedColors = generateColors(
+                        drawable
+                    )
+                    if (generatedColors != null) {
+                        val (actionBarColor, statusBarColor, titleActionBarColor) = generatedColors!!
+
+                        animateActionBarColor(
+                            fromColor = ContextCompat.getColor(context!!, R.color.colorPrimary),
+                            toColor = actionBarColor.color
+                        )
+                        animateStatusBarColor(statusBarColor)
+                        animateTitleActionBarColor(titleActionBarColor)
+                        animateBackArrouActionBarColor(titleActionBarColor)
+                    }
+                }
+            })
         } else {
             imageViewCountryFlag.visibility = View.GONE
         }
     }
 
+    private fun animateBackArrouActionBarColor(titleActionBarColor: TitleActionBarColor) {
+        ColorUtils.animateColors(
+            fromColor = ContextCompat.getColor(context!!, R.color.white),
+            toColor = titleActionBarColor.color
+        ) {
+            setBackArrowActionBarColor(it)
+        }
+    }
+
+    private fun animateTitleActionBarColor(titleActionBarColor: TitleActionBarColor) {
+        ColorUtils.animateColors(
+            fromColor = ContextCompat.getColor(context!!, R.color.white),
+            toColor = titleActionBarColor.color
+        ) {
+            setTitleActionBarColor(it)
+        }
+    }
+
+    private fun animateStatusBarColor(statusBarColor: StatusBarColor) {
+        ColorUtils.animateColors(
+            fromColor = ContextCompat.getColor(context!!, R.color.colorPrimaryDark),
+            toColor = statusBarColor.color
+        ) {
+            setStatusBarColor(it)
+        }
+    }
+
+    private fun animateActionBarColor(@ColorInt fromColor: Int, @ColorInt toColor: Int) {
+        val actionBar = supportActionBar()
+        ColorUtils.animateColors(
+            fromColor = fromColor,
+            toColor = toColor
+        ) {
+            actionBar?.setBackgroundDrawable(ColorDrawable(it))
+        }
+    }
+
+    private suspend fun generateColors(drawable: Drawable?):
+            Triple<ActionBarColor, StatusBarColor, TitleActionBarColor>? =
+        withContext(Dispatchers.Default) {
+
+            if (drawable == null) {
+                return@withContext null
+            }
+            val palette = Palette
+                .from(drawable.toBitmap())
+                .addTarget(Target.VIBRANT)
+                .generate()
+
+            if (palette.dominantSwatch == null) {
+                return@withContext null
+            }
+
+            val actionBarColor = palette.dominantSwatch!!.rgb
+            val statusBarColor = ColorUtils.manipulateColor(actionBarColor, 0.7f)
+            val titleActionBarColor = palette.dominantSwatch!!.bodyTextColor
+            return@withContext Triple(
+                ActionBarColor(actionBarColor),
+                StatusBarColor(statusBarColor),
+                TitleActionBarColor(titleActionBarColor)
+            )
+        }
+
+    override fun onDestroyView() {
+
+        setStatusBarColor(ContextCompat.getColor(context!!, R.color.colorPrimaryDark))
+
+        if (generatedColors != null) {
+            animateActionBarColor(
+                fromColor = generatedColors!!.first.color,
+                toColor = ContextCompat.getColor(context!!, R.color.colorPrimary)
+            )
+        } else {
+            supportActionBar()?.setBackgroundDrawable(
+                ColorDrawable(ContextCompat.getColor(context!!, R.color.colorPrimary))
+            )
+        }
+
+        super.onDestroyView()
+    }
 }
+
+inline class ActionBarColor(@ColorInt val color: Int)
+inline class StatusBarColor(@ColorInt val color: Int)
+inline class TitleActionBarColor(@ColorInt val color: Int)

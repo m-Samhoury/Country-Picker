@@ -28,7 +28,7 @@ import com.moustafa.countrypicker.utils.svgloading.SvgSoftwareLayerSetter
  */
 fun ImageView.loadSVG(
     imageUrl: String,
-    onSuccess: (() -> Any?)? = null,
+    onSuccess: ((Drawable?) -> Any?)? = null,
     onFailed: (() -> Any?)? = null
 ) {
     val requestBuilder: RequestBuilder<PictureDrawable> =
@@ -54,7 +54,7 @@ fun ImageView.loadSVG(
                     dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
-                    onSuccess?.invoke()
+                    onSuccess?.invoke(resource)
                     return super.onResourceReady(
                         resource,
                         model,
@@ -76,8 +76,8 @@ fun ImageView.loadSVG(
 fun ImageView.load(
     imageUrl: String,
     roundedCorners: Int? = null,
-    onSuccess: (() -> Any?)? = null,
-    onFailed: (() -> Any?)? = null
+    onSuccess: ((Drawable?) -> Unit)? = null,
+    onFailed: (() -> Unit)? = null
 ) {
     var requestBuilder: GlideRequest<Drawable> = GlideApp.with(this)
         .load(imageUrl)
@@ -105,7 +105,7 @@ fun ImageView.load(
             dataSource: DataSource?,
             isFirstResource: Boolean
         ): Boolean {
-            onSuccess?.invoke()
+            onSuccess?.invoke(resource)
             return false
         }
     })

@@ -2,6 +2,10 @@ package com.moustafa.countrypicker.utils
 
 import android.animation.Animator
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.MenuItem
 import android.view.View
 import android.widget.GridLayout
@@ -11,7 +15,9 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.SearchView
+import androidx.core.graphics.drawable.DrawableCompat
 import com.moustafa.countrypicker.R
+
 
 /**
  * @author moustafasamhoury
@@ -109,4 +115,37 @@ fun MenuItem.setExpansionAnimation(
         }
 
     })
+}
+
+fun Drawable.tintCompat(@ColorInt color: Int) {
+    var wrappedDrawable = DrawableCompat.wrap(this)
+    wrappedDrawable = wrappedDrawable.mutate()
+    DrawableCompat.setTint(wrappedDrawable, color)
+}
+
+fun Drawable.toBitmap(): Bitmap {
+    if (this is BitmapDrawable) {
+        if (this.bitmap != null) {
+            return this.bitmap
+        }
+    }
+
+    val bitmap: Bitmap = if (intrinsicWidth <= 0 || intrinsicHeight <= 0) {
+        Bitmap.createBitmap(
+            1,
+            1,
+            Bitmap.Config.ARGB_8888
+        ) // Single color bitmap will be created of 1x1 pixel
+    } else {
+        Bitmap.createBitmap(
+            intrinsicWidth,
+            intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+    }
+
+    val canvas = Canvas(bitmap)
+    setBounds(0, 0, canvas.width, canvas.height)
+    draw(canvas)
+    return bitmap
 }

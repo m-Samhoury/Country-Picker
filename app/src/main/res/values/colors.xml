@@ -7,4 +7,5 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="grey">#C9C9C9</color>
+    <color name="errorColor">#777676</color>
 </resources>

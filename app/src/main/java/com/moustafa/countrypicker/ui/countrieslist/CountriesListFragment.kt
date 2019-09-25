@@ -152,8 +152,18 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
             }
         }
 
-    private fun populateRecipes(recipesList: List<Country>) =
+    private fun populateRecipes(recipesList: List<Country>) {
         countriesListAdapter.submitList(recipesList)
+        refreshEmptyStateVisibility(shouldShow = recipesList.isEmpty())
+    }
+
+    private fun refreshEmptyStateVisibility(shouldShow: Boolean) {
+        if (shouldShow) {
+            textViewNoResults.visibility = View.VISIBLE
+        } else {
+            textViewNoResults.visibility = View.GONE
+        }
+    }
 
     private fun onRowItemClicked(view: View, position: Int) {
         view.findNavController().navigate(

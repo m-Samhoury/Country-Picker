@@ -18,26 +18,10 @@
         <item name="android:colorControlHighlight">@color/black</item>
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:closeIcon">@drawable/ic_flag</item>
-
-        <!--        <item name="android:textAppearance">@style/normalTextStyle</item>-->
-        <!--        <item name="android:text">asdas da das</item>-->
-        <!--        <item name="android:editTextColor">@color/black</item>-->
-        <!--        <item name="searchIcon">@null</item>-->
-
-        <!--        &lt;!&ndash; Search button icon &ndash;&gt;-->
-        <!--        <item name="searchIcon">...</item>-->
-        <!--        &lt;!&ndash; Go/commit button icon &ndash;&gt;-->
-        <!--        <item name="goIcon">...</item>-->
-        <!--        &lt;!&ndash; Voice search button icon &ndash;&gt;-->
-        <!--        <item name="voiceIcon">...</item>-->
-        <!--        &lt;!&ndash; Commit icon shown in the query suggestion row &ndash;&gt;-->
-        <!--        <item name="commitIcon">...</item>-->
-        <!--        &lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
-        <!--        <item name="suggestionRowLayout">...</item>-->
     </style>
 
     <style name="normalTextStyle" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -49,13 +33,19 @@
     </style>
 
     <style name="titleTextStyle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="headerTextStyle" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="errorTextStyle" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/errorColor</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">15sp</item>
     </style>

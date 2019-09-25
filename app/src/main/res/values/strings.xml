@@ -17,5 +17,6 @@
     <!--    Generics-->
     <string name="generic_error_unknown">Unknown error</string>
     <string name="action_retry">Retry</string>
+    <string name="countries_list_no_results_found">No Results found</string>
 
 </resources>

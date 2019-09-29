@@ -1,7 +1,9 @@
 package com.moustafa.countrypicker.ui.countrydetails
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
@@ -51,6 +53,19 @@ class CountryDetailsFragment : BaseFragment(R.layout.fragment_country_details) {
                     start = 16, end = 16
                 )
             )
+        }
+        
+        imageViewCountryStaticMap.setOnClickListener {
+            args.country.mapLatLng?.let {
+                val gmmIntentUri =
+                    Uri.parse(
+                        "geo:0,0?q=${it[0]}," +
+                                "${it[1]}(${args.country.name})"
+                    )
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
         }
     }
 

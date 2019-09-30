@@ -55,6 +55,8 @@ will navigate the user to the same country details screen.
 Here is a gif demonstrating this super mini app:
 
 
+I created a small animation for the search bar expansion and collapse.
+
 Search behavior and animation:
 
 ![Search animation Gif](/readmeassets/country_picker_search_animation.gif)

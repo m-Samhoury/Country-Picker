@@ -133,7 +133,7 @@ class CountriesListFragment : BaseFragment(R.layout.fragment_countries_list) {
     }
 
     private fun handleState(countriesListState: CountriesListState) =
-        when (val result = countriesListState.stateMonitor) {
+        when (val result = countriesListState.countriesListStateMonitor) {
             StateMonitor.Loading -> {
                 showLoading(true)
             }

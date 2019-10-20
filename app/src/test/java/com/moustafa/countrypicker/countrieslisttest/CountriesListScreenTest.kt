@@ -45,7 +45,7 @@ class CountriesListScreenTest {
 
         recipesListViewModel = CountriesListViewModel(repository)
 
-        assertThat(currentViewModelState.stateMonitor is StateMonitor.Loading).isTrue()
+        assertThat(currentViewModelState.countriesListStateMonitor is StateMonitor.Loading).isTrue()
         coroutinesTestRule.resumeDispatcher()
 
     }
@@ -68,12 +68,12 @@ class CountriesListScreenTest {
 
         recipesListViewModel = CountriesListViewModel(repository)
 
-        assertThat(currentViewModelState.stateMonitor is StateMonitor.Loading).isTrue()
+        assertThat(currentViewModelState.countriesListStateMonitor is StateMonitor.Loading).isTrue()
 
         coroutinesTestRule.resumeDispatcher()
 
-        assertThat(currentViewModelState.stateMonitor is StateMonitor.Loaded).isTrue()
-        assertThat((currentViewModelState.stateMonitor as StateMonitor.Loaded).result)
+        assertThat(currentViewModelState.countriesListStateMonitor is StateMonitor.Loaded).isTrue()
+        assertThat((currentViewModelState.countriesListStateMonitor as StateMonitor.Loaded).result)
             .hasSize(5)
     }
 
@@ -93,12 +93,12 @@ class CountriesListScreenTest {
 
         recipesListViewModel = CountriesListViewModel(repository)
 
-        assertThat(currentViewModelState.stateMonitor is StateMonitor.Loading).isTrue()
+        assertThat(currentViewModelState.countriesListStateMonitor is StateMonitor.Loading).isTrue()
 
         coroutinesTestRule.resumeDispatcher()
 
-        assertThat(currentViewModelState.stateMonitor is StateMonitor.Failed).isTrue()
-        assertThat((currentViewModelState.stateMonitor as StateMonitor.Failed).failed)
+        assertThat(currentViewModelState.countriesListStateMonitor is StateMonitor.Failed).isTrue()
+        assertThat((currentViewModelState.countriesListStateMonitor as StateMonitor.Failed).failed)
             .isInstanceOf(NetworkErrorException::class.java)
     }
 
@@ -120,9 +120,9 @@ class CountriesListScreenTest {
         coroutinesTestRule.pauseDispatcher()
         recipesListViewModel.filterCountries("netherlands")
 
-        assertThat((currentViewModelState.stateMonitor as StateMonitor.Loaded).result)
+        assertThat((currentViewModelState.countriesListStateMonitor as StateMonitor.Loaded).result)
             .hasSize(1)
-        assertThat((currentViewModelState.stateMonitor as StateMonitor.Loaded).result[0].name)
+        assertThat((currentViewModelState.countriesListStateMonitor as StateMonitor.Loaded).result[0].name)
             .isEqualTo("Netherlands")
 
         coroutinesTestRule.resumeDispatcher()
@@ -146,7 +146,7 @@ class CountriesListScreenTest {
         coroutinesTestRule.pauseDispatcher()
         recipesListViewModel.filterCountries("Lebanon")
 
-        assertThat((currentViewModelState.stateMonitor as StateMonitor.Loaded).result)
+        assertThat((currentViewModelState.countriesListStateMonitor as StateMonitor.Loaded).result)
             .hasSize(0)
 
         coroutinesTestRule.resumeDispatcher()

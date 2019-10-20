@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
  * @author moustafasamhoury
  * created on Tuesday, 10 Sep, 2019
  */
-data class CountriesListState(val stateMonitor: StateMonitor<List<Country>> = StateMonitor.Init)
+data class CountriesListState(val countriesListStateMonitor: StateMonitor<List<Country>> = StateMonitor.Init)
 
 class CountriesListViewModel(
     private val repository: Repository,
@@ -33,16 +33,16 @@ class CountriesListViewModel(
 
     fun fetchCountriesList() {
         _countriesListStateLiveData.value =
-            countriesListState.copy(stateMonitor = StateMonitor.Loading)
+            countriesListState.copy(countriesListStateMonitor = StateMonitor.Loading)
         viewModelScope.launch(Dispatchers.Main) {
             val response = repository.fetchCountriesList {
                 _countriesListStateLiveData.value =
-                    countriesListState.copy(stateMonitor = StateMonitor.Failed(failed = it))
+                    countriesListState.copy(countriesListStateMonitor = StateMonitor.Failed(failed = it))
             }
             if (response != null) {
                 countriesList = ArrayList(response)
                 _countriesListStateLiveData.value =
-                    countriesListState.copy(stateMonitor = StateMonitor.Loaded(response))
+                    countriesListState.copy(countriesListStateMonitor = StateMonitor.Loaded(response))
             }
         }
     }
@@ -53,12 +53,12 @@ class CountriesListViewModel(
         }
         if (query?.isBlank() == true) {
             _countriesListStateLiveData.value =
-                countriesListState.copy(stateMonitor = StateMonitor.Loaded(countriesList))
+                countriesListState.copy(countriesListStateMonitor = StateMonitor.Loaded(countriesList))
         } else {
             val anotherList = ArrayList(countriesList)
             _countriesListStateLiveData.value =
                 countriesListState.copy(
-                    stateMonitor = StateMonitor.Loaded(
+                    countriesListStateMonitor = StateMonitor.Loaded(
                         anotherList.filter { country ->
                             val countryName = country.name?.toLowerCase(Locale.US)
                             val countryDescription = country.description?.toLowerCase(Locale.US)
